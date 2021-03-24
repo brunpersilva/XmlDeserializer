@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace Atividade.Models
+namespace XmlDeserializer.Domain.Entities
 {
     public class Items
     {
@@ -11,7 +11,7 @@ namespace Atividade.Models
         public string Title { get; set; }
         [XmlElement("release_date")]
         public DateTime Release_date { get; set; }
-        public string Studio { get; set; } = "marvel";
+        public string Studio { get; set; }
     }
 
 }

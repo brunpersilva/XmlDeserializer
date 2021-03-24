@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Films>
+<films>
 	<items>
 		<id>1</id>
 		<title>The Incredible Hulk</title>
@@ -115,4 +115,4 @@
 		<title>Spider-Man: Far From Home</title>
 		<release_date>2019-07-05</release_date>
 	</items>
-</Films>
+</films>

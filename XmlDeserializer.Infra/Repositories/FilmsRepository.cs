@@ -1,15 +1,19 @@
-﻿using Atividade.Models;
-using Dapper;
+﻿using Dapper;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using XmlDeserializer.Domain.Entities;
+using XmlDeserializer.Domain.Interfaces;
 
-namespace Atividade.Connector
+namespace XmlDeserializer.Repositories
 {
-    public class SqlConnector
+    public class FilmsRepository : IFilmsRepository
     {
-
-        public void SaveFilms(Films films)
+        public void InsertFilms(Films films)
         {
+            //string connectionString = _configuration.GetConnectionString("FilmsDatabase");
+
             using (IDbConnection connection = new SqlConnection("Data Source=DESKTOP-LFU4RFH;Initial Catalog=Films;Integrated Security=True"))
             {
                 foreach (Items item in films.FilmsList)
@@ -25,6 +29,5 @@ namespace Atividade.Connector
             }
 
         }
-
     }
 }

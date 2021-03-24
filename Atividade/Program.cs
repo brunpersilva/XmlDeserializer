@@ -1,40 +1,37 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.Linq;
 using System.IO;
-using Atividade.Models;
-using Atividade.Connector;
+using XmlDeserializer.Domain.Entities;
+using Microsoft.Extensions.DependencyInjection;
+using XmlDeserializer.Domain.Interfaces;
+using XmlDeserializer.CrossCutting;
 
 namespace Atividade
 {
     class Program
     {
+        private static IServiceProvider _serviceProvider;
         static void Main(string[] args)
-        {            
-            Films films;
+        {
+            BuildServiceProvider();
 
-            Console.WriteLine();
+            string company = "marvel";
 
-            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-            string path = Path.Combine(@"C:\Users\Pichau\source\repos\AtividadeSolution\Atividade\Arquivos\marvel.xml");
-            var serializer = new XmlSerializer(typeof(Films), new XmlRootAttribute("Films"));
+            var xmlRepository = _serviceProvider.GetService<IXmlRepository>();
 
-            using (var stream = new FileStream(path, FileMode.Open))
-            {
-                films = (Films)serializer.Deserialize(stream);
-            }
+            var films = xmlRepository.GetFilms(company);
+            
+            var repo = _serviceProvider.GetService<IFilmsRepository>();
 
-            films.FilmsList.Count();
-
-            var sql = new SqlConnector();
-
-            sql.SaveFilms(films);
-
-            Console.WriteLine();
-
-
+            repo.InsertFilms(films);
         }
 
+        private static void BuildServiceProvider()
+        {
+            var services = new ServiceCollection();
+            services.Inject();
+            _serviceProvider = services.BuildServiceProvider();
+        }
     }
 
 
