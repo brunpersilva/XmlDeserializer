@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using XmlDeserializer.Domain.Entities;
@@ -10,11 +9,14 @@ namespace XmlDeserializer.Repositories
 {
     public class FilmsRepository : IFilmsRepository
     {
-        public void InsertFilms(Films films)
-        {
-            //string connectionString = _configuration.GetConnectionString("FilmsDatabase");
 
-            using (IDbConnection connection = new SqlConnection("Data Source=DESKTOP-LFU4RFH;Initial Catalog=Films;Integrated Security=True"))
+        public void Insert(Films films)
+        {
+            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);
+            var configuration = builder.Build();
+            string connectionString = configuration.GetConnectionString("FilmsDatabase");
+
+            using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 foreach (Items item in films.FilmsList)
                 {

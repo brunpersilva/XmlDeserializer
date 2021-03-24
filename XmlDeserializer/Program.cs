@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Xml.Serialization;
-using System.IO;
-using XmlDeserializer.Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using XmlDeserializer.Domain.Interfaces;
 using XmlDeserializer.CrossCutting;
 
-namespace Atividade
+namespace XmlDeserializer
 {
     class Program
     {
@@ -20,10 +17,10 @@ namespace Atividade
             var xmlRepository = _serviceProvider.GetService<IXmlRepository>();
 
             var films = xmlRepository.GetFilms(company);
-            
+
             var repo = _serviceProvider.GetService<IFilmsRepository>();
 
-            repo.InsertFilms(films);
+            repo.Insert(films);
         }
 
         private static void BuildServiceProvider()
@@ -32,7 +29,6 @@ namespace Atividade
             services.Inject();
             _serviceProvider = services.BuildServiceProvider();
         }
+
     }
-
-
 }

@@ -5,9 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>
 
@@ -15,7 +19,10 @@
     <ProjectReference Include="..\XmlDeserializer.Domain\XmlDeserializer.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup>     
+    <None Update="appSettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>     
     <None Update="Arquivos\marvel.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
