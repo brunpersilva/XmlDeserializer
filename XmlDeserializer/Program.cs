@@ -20,22 +20,31 @@ namespace XmlDeserializer
             var films = xmlRepository.GetFilms(company);
 
             var filmsRepository = _serviceProvider.GetService<IFilmsRepository>();
+            
 
-            //Configurando para buscar a connection string
-            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);
-            var configuration = builder.Build();
+            var Configurationservice = _serviceProvider.GetService<IConfiguration>();
 
-            string connectionString = configuration.GetConnectionString("FilmsDatabase");
+            string connectionString = Configurationservice.GetConnectionString("FilmsDatabase");
 
             filmsRepository.Insert(films, connectionString);
         }
 
         private static void BuildServiceProvider()
         {
+            IConfigurationRoot configuration = ConfigureService();
+
             var services = new ServiceCollection();
             services.Inject();
+            services.AddSingleton(configuration);
+
             _serviceProvider = services.BuildServiceProvider();
         }
 
+        private static IConfigurationRoot ConfigureService()
+        {
+            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);
+            var configurationService = builder.Build();
+            return configurationService;
+        }
     }
 }
