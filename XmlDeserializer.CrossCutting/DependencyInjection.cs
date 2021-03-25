@@ -11,7 +11,7 @@ namespace XmlDeserializer.CrossCutting
         public static void Inject(this ServiceCollection services)
         {
             services.AddSingleton<IFilmsRepository, FilmsRepository>();
-            services.AddSingleton<IXmlRepository, XmlRepository>();
+            services.AddSingleton<IXmlRepository, XmlRepository>();            
         }
     }
 }

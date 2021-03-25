@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using XmlDeserializer.Domain.Interfaces;
 using XmlDeserializer.CrossCutting;
-using Microsoft.Extensions.Configuration;
+using XmlDeserializer.AppConfigurations;
 
 namespace XmlDeserializer
 {
@@ -19,32 +19,21 @@ namespace XmlDeserializer
 
             var films = xmlRepository.GetFilms(company);
 
-            var filmsRepository = _serviceProvider.GetService<IFilmsRepository>();
-            
+            var filmsRepository = _serviceProvider.GetService<IFilmsRepository>();           
 
-            var Configurationservice = _serviceProvider.GetService<IConfiguration>();
-
-            string connectionString = Configurationservice.GetConnectionString("FilmsDatabase");
-
-            filmsRepository.Insert(films, connectionString);
+            filmsRepository.Insert(films);
         }
 
         private static void BuildServiceProvider()
         {
-            IConfigurationRoot configuration = ConfigureService();
-
             var services = new ServiceCollection();
-            services.Inject();
-            services.AddSingleton(configuration);
 
+            services.AddSingleton<IAppConfiguration, AppConfiguration>();
+
+            services.Inject();
             _serviceProvider = services.BuildServiceProvider();
         }
 
-        private static IConfigurationRoot ConfigureService()
-        {
-            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);
-            var configurationService = builder.Build();
-            return configurationService;
-        }
+        
     }
 }
