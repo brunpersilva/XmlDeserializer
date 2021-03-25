@@ -3,6 +3,11 @@ using System.Xml.Serialization;
 
 namespace XmlDeserializer.Domain.Entities
 {
+
+
+    /// <summary>
+    /// Represents the information about every film
+    /// </summary>
     public class Items
     {
         [XmlElement("id")]
