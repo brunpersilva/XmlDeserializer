@@ -4,6 +4,6 @@ namespace XmlDeserializer.Domain.Interfaces
 {
     public interface IFilmsRepository
     {
-        void Insert(Films films);
+        void Insert(Films films, string connectionString);
     }
 }

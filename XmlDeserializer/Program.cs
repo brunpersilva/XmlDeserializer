@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using XmlDeserializer.Domain.Interfaces;
 using XmlDeserializer.CrossCutting;
+using Microsoft.Extensions.Configuration;
 
 namespace XmlDeserializer
 {
@@ -18,9 +19,15 @@ namespace XmlDeserializer
 
             var films = xmlRepository.GetFilms(company);
 
-            var repo = _serviceProvider.GetService<IFilmsRepository>();
+            var filmsRepository = _serviceProvider.GetService<IFilmsRepository>();
 
-            repo.Insert(films);
+            //Configurando para buscar a connection string
+            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false);
+            var configuration = builder.Build();
+
+            string connectionString = configuration.GetConnectionString("FilmsDatabase");
+
+            filmsRepository.Insert(films, connectionString);
         }
 
         private static void BuildServiceProvider()

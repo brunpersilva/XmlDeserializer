@@ -17,9 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>     
-    <None Update="appSettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>     
     <None Update="Arquivos\marvel.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

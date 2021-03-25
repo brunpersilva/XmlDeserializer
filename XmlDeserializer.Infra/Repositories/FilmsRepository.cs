@@ -8,16 +8,8 @@ namespace XmlDeserializer.Repositories
 {
     public class FilmsRepository : IFilmsRepository
     {
-        private readonly IConfigurationService _configuration;
-
-        public FilmsRepository(IConfigurationService configuration)
+        public void Insert(Films films, string connectionString)
         {
-            _configuration = configuration;
-        }
-
-        public void Insert(Films films)        {
-
-            string connectionString = _configuration.GetConnectionString();
 
             using (IDbConnection connection = new SqlConnection(connectionString))
             {
